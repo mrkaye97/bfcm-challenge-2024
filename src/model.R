@@ -19,13 +19,11 @@ predicted_growth <- data %>%
   drop_na() %>%
   ungroup() %>%
   group_by(year) %>%
-  summarize(avg_yoy_change = mean(yoy_change)) %>%
-  ungroup() %>%
+  summarize(avg_yoy_change = mean(yoy_change), .groups="drop") %>%
   summarize(avg_yoy_change = sum(case_when(year == 2022 ~ 0.3, year == 2023 ~ 0.7) * avg_yoy_change)) %>%
   pull(avg_yoy_change)
 
-data <- data %>%
-  filter(days_to_black_friday %in% 0:4)
+data <- filter(data, days_to_black_friday %in% 0:4)
 
 forecast <- data %>%
   filter(year < 2024) %>%
