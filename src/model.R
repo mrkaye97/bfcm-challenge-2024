@@ -45,7 +45,7 @@ forecast <- data %>%
   summarize(num_emails = sum(num_emails), .groups="drop") %>%
   mutate(year = 2024)
 
-data %>%
+plot <- data %>%
   filter(year < 2024) %>%
   bind_rows(forecast) %>%
   mutate(
@@ -56,3 +56,4 @@ data %>%
   ggplot(aes(x=time, y=num_emails, color=year)) +
   geom_line()
 
+ggplot2::ggsave("plots/forecast.png", plot)
