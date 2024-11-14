@@ -45,15 +45,17 @@ forecast <- data %>%
   summarize(num_emails = sum(num_emails), .groups="drop") %>%
   mutate(year = 2024)
 
-plot <- data %>%
-  filter(year < 2024) %>%
-  bind_rows(forecast) %>%
-  mutate(
-    time = days_to_black_friday * 24 + as.numeric(hour),
-    year = as_factor(year)
-  ) %>%
-  arrange(days_to_black_friday, hour) %>% 
-  ggplot(aes(x=time, y=num_emails, color=year)) +
-  geom_line()
+(
+  plot <- data %>%
+    filter(year < 2024) %>%
+    bind_rows(forecast) %>%
+    mutate(
+      time = days_to_black_friday * 24 + as.numeric(hour),
+      year = as_factor(year)
+    ) %>%
+    arrange(days_to_black_friday, hour) %>% 
+    ggplot(aes(x=time, y=num_emails, color=year)) +
+    geom_line()
+)
 
 ggplot2::ggsave("plots/forecast.png", plot)
