@@ -1,3 +1,6 @@
+SET VARIABLE TARGET_YEAR = 2024;
+SET VARIABLE PREVIOUS_YEAR = GETVARIABLE('TARGET_YEAR') - 1;
+
 WITH raw AS (
     SELECT
         *,
@@ -25,13 +28,13 @@ WITH raw AS (
 )
 
 SELECT
-    2024 AS year,
+    GETVARIABLE('TARGET_YEAR') AS year,
     days_to_black_friday,
     hour,
     ROUND(num_emails * growth_rate) AS num_emails
 FROM raw r
 JOIN forecasted_growth g ON r.year = g.year - 1
 WHERE
-    r.year = 2023 -- Use previous year's data as the base
+    r.year = GETVARIABLE('PREVIOUS_YEAR') -- Use previous year's data as the base
     AND days_to_black_friday BETWEEN 0 AND 3
 ORDER BY 1, 2, 3
