@@ -1,15 +1,7 @@
 WITH raw AS (
     SELECT
         *,
-        100 * (
-            (
-                num_emails :: FLOAT / LAG(num_emails, 1)
-                OVER (
-                    PARTITION BY days_to_black_friday, hour
-                    ORDER BY year
-                )
-            ) - 1
-        ) AS yoy_change
+        100 * (num_emails :: FLOAT / LAG(num_emails, 1) OVER (PARTITION BY days_to_black_friday, hour ORDER BY year) - 1) AS yoy_change
     FROM read_csv(
         'historicals.csv',
         delim = ',',
