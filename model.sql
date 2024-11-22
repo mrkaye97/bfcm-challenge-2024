@@ -27,19 +27,19 @@ WITH raw AS (
     SELECT year, 1 + AVG(yoy_change) / 100 AS growth_rate
     FROM raw
     WHERE
-        yoy_change BETWEEN -50 AND 100
-        AND days_to_black_friday BETWEEN -25 AND -2
+        yoy_change BETWEEN -50 AND 100 -- clean up outliers
+        AND days_to_black_friday BETWEEN -25 AND -2 -- Smooth using the average growth rate from the three weeks leading up to BFCM
     GROUP BY year
 )
 
 SELECT
-    2023 AS year,
+    2024 AS year,
     days_to_black_friday,
     hour,
     ROUND(num_emails * growth_rate) AS num_emails
 FROM raw r
 JOIN forecasted_growth g ON r.year = g.year - 1
 WHERE
-    r.year = 2022
+    r.year = 2023 -- Use previous year's data as the base
     AND days_to_black_friday BETWEEN 0 AND 3
 ORDER BY 1, 2, 3
