@@ -14,3 +14,11 @@ You'll need two things to run this "model":
 
 1. You'll need to [set up DuckDB](https://duckdb.org/docs/installation/?version=stable&environment=cli&platform=macos&download_method=package_manager)
 2. You'll need to have the historical data saved to `historicals.csv`
+
+Once both of those are all set, you can run the model:
+
+```bash
+duckdb --csv < model.sql > forecast.csv
+```
+
+This should output a CSV file called `forecast.csv` with the forecasted email sends!
