@@ -6,7 +6,7 @@ Method: The simplest thing I could think of:
 
 1. Estimate the year-over-year growth rate in email sends based on the average year-over-year growth rate for the days leading up to BFCM
 2. Use the previous year's series times the forecasted growth rate
-3. Do it all in 45 lines of SQL with DuckDB
+3. Do it all in 40 lines of SQL with DuckDB
 
 ## Running this solution
 
